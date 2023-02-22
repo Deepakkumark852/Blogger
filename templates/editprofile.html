@@ -1,0 +1,16 @@
+{% extends 'navbar.html' %}
+{%block main %}
+<div>
+    <form action="/editprofile" method="post">
+        <p>
+            <label for="name">Name</label>
+            <input type="text" value="{{user.name}}" id="name" name="name" placeholder="Name" size="100 rem">
+        </p>
+        <p>
+            <label for="username">Username</label>
+            <input type="text" value="{{user.username}}" id="username" name="username" placeholder="Username" size="100 rem">
+        </p>
+        <button type="submit">Update</button>
+    </form>
+</div>
+{% endblock %}

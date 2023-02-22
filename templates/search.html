@@ -1,0 +1,55 @@
+
+{% extends 'navbar.html' %}
+{%block main %}
+<form action="" method="POST">
+
+
+    <p>
+        <input type="text" id="search" name="search" placeholder="Search.." size="100 rem">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </p>
+</form>
+<div id="result">
+    {% if cont %}
+
+    <ul>
+        {% for user in cont.followed%}
+        <li>
+            <a href="\profile\{{user.username}}">{{user.name}}</a>
+            <a href="\deletefollow\{{user.id}}">
+            <button type="submit" class="btn btn-primary">Following</button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+    <ul>
+        {% for user in cont.users%}
+        <li>
+            <a href="\profile\{{user.username}}">{{user.name}}</a>
+            <a href="\createfollow\{{user.id}}">
+            <button type="submit" class="btn btn-primary">Follow</button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+    <ul>
+        {% for user in cont.followers%}
+        <li>
+            <a href="\profile\{{user.username}}">{{user.name}}</a>
+            <a href="\createfollow\{{user.id}}">
+            <button type="submit"  class="btn btn-primary">Follow</button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

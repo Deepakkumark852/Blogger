@@ -1,0 +1,146 @@
+{% extends 'navbar.html' %}
+{%block main %}
+<div>
+    <div>
+
+
+        <div class="profile">
+            <div style="background-color:#eee">
+                {% if context %}
+                <p>{{context['user'].username}}</p>
+                <img src="{{url_for('static', filename='img/profile.png') }}" width="100" height="100">
+            </div>
+
+            <div style="background-color: #eee;">
+                <p>Total Posts</p>
+                <p>{{context['count_posts']}}</p>
+            </div>
+
+            <div style="background-color: #eee;">
+                <div class="follow">
+                    <a href="">followers</a>
+                    <div class="follow_content">
+                        <ul>
+                            {% for follower in range(context['count_followers']) %}
+                            <li>
+                                <a
+                                    href="/profile/{{ context['follower_users'][follower] }}">{{context['followers'][follower]['follower_name']}}</a>
+                                {% if context['followers'][follower]['followed_id'] == id %}
+                                {% if context['followers'][follower]['mutual'] == '1' %}
+                                <a href="/deletefollow/{{context['followers'][follower]['follower_id']}}">
+                                    <button type="submit" class="btn btn-primary">Following</button>
+                                </a>
+                                {% else %}
+                                <a href="/createfollow/{{context['followers'][follower]['follower_id']}}">
+                                    <button type="submit" class="btn btn-primary">Follow</button>
+                                </a>
+                                {% endif %}
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <p>{{ context['count_followers'] }}</p>
+            </div>
+
+            <div style="background-color: #eee;">
+                <div class="follow">
+                    <a href="">following</a>
+                    <div class="follow_content">
+                        <ul>
+                            {% for follower in range(context['count_followed']) %}
+                            <li>
+                                <a
+                                    href="/profile/{{ context['followed_users'][follower] }}">{{context['followed'][follower]['followed_name']}}</a>
+                                {% if context['followed'][follower].follower_id == id %}
+                                <a href="/deletefollow/{{context['followed'][follower].followed_id}}">
+                                    <button type="submit" class="btn btn-primary">Following</button>
+                                </a>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+                <p>{{ context['count_followed'] }}</p>
+            </div>
+
+        </div>
+
+        <div>
+            {% if context['posts'] %}
+            <div class="post">
+                {% for post in range(context['count_posts']) %}
+                <div style="background-color: #eee;">
+                    {% if context['user'].id == id %}
+                    <div class="sidebar">
+                        <button>:</button>
+                        <div class="sidebar-content">
+                            <a>
+                                <form action="/editpost" method="GET">
+                                    <button type="submit" name="submit" value="{{post}}"
+                                        class="btn btn-primary">Edit</button>
+                                </form>
+                            </a>
+                            <a>
+                                <form action="/deletepost" method="GET">
+                                    <button type="submit" name="delete" value="{{post}}"
+                                        class="btn btn-primary">Delete</button>
+                                </form>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% set path = context['posts'][post]['id'] | string + '.png' %}
+                    <img src="{{url_for('static', filename='img/' + path ) }}" width="100" height="100">
+                    <h2>{{ context['posts'][post]['title']}}</h2>
+                    {{ context['posts'][post]['content'] }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>user not found</p>
+        {% endif %}
+    </div>
+
+
+</div>
+
+<style>
+    .post {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 10px;
+        margin-bottom: 20px;
+        column-gap: 10px;
+        text-align: center;
+
+
+    }
+
+    .profile {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding: 10px;
+        margin-bottom: 20px;
+        column-gap: 10px;
+        text-align: center;
+    }
+
+    .sidebar {
+        text-align: right;
+    }
+
+    .sidebar-content {
+        display: none;
+    }
+
+    .sidebar:hover .sidebar-content {
+        display: inline-block;
+    }
+</style>
+{% endblock %}

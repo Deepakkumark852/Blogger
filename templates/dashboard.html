@@ -1,0 +1,55 @@
+{% extends 'navbar.html' %}
+{%block main %}
+{% if posts %}
+<div class="post">
+    {% for post in posts %}
+    <div style="background-color: #eee;">
+        <div class="sidebar">
+            <button>:</button>
+        </div>
+        <h2>{{post[0].title}}</h2>
+        <a href="\profile\{{post[1]}}">by {{post[2]}}</a>
+        <p>{{post[0].content}}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No posts found.</p>
+    {% endif %}
+</div>
+
+<style>
+    .post {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 10px;
+        margin-bottom: 20px;
+        column-gap: 10px;
+        text-align: center;
+        padding-bottom: 10px;
+
+
+    }
+
+    .profile {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding: 10px;
+        margin-bottom: 20px;
+        column-gap: 10px;
+        text-align: center;
+    }
+
+    .sidebar {
+        text-align: right;
+    }
+
+    .sidebar-content {
+        display: none;
+    }
+
+    .sidebar:hover .sidebar-content {
+        display: inline-block;
+    }
+</style>
+
+{% endblock %}

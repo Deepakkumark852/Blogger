@@ -1,0 +1,21 @@
+
+{% extends 'navbar.html' %}
+{%block main %}
+<form action="" enctype="multipart/form-data"  method="post">
+    <p>
+        <label for="title">TITLE</label>
+        <input type="text" name="title" id="title">
+    </p>
+    <p>
+        <label for="content">CONTENT/DESCRIPTION</label>
+    </p>
+    <textarea name="content" id="content" cols="100" rows="10"></textarea>
+    <p>
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image">
+    </p>
+    <p>
+        <button type="submit">POST</button>
+    </p>
+</form>
+{% endblock %}
